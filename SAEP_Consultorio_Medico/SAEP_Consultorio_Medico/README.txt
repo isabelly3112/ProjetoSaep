@@ -40,3 +40,8 @@ OBSERVAÇÕES IMPORTANTES
 - Para editar um cadastro, informe novamente o CPF, pois o formulário não recupera nem exibe o CPF original.
 - Os CPFs fictícios já inseridos no SQL são mostrados mascarados. Para descriptografar os registros de demonstração, seria necessária a chave exata usada na geração desses valores; ela não foi fornecida no SQL.
 - O projeto usa consultas preparadas, escape de saída e token CSRF nos formulários.
+
+
+ARQUIVO EXTRA
+- previa_visual.html: prévia visual simples que pode ser aberta diretamente no navegador, sem XAMPP. Os botões e cadastros nessa prévia são apenas demonstrativos.
+- saep_db.sql: script SQL com a estrutura e os dados de exemplo enviados.

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sistema do Consultório</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #222
+        }
+
+        header {
+            background: #78b9ad;
+            color: #fff;
+            padding: 16px 22px;
+            font-size: 20px;
+            font-weight: bold
+        }
+
+        nav {
+            background: #fff;
+            padding: 10px 18px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap
+        }
+
+        nav button {
+            border: 1px solid #ccc;
+            background: #fff;
+            padding: 9px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #333
+        }
+
+        nav button.active,
+        button.primary {
+            background: #78b9ad;
+            color: white;
+            border-color: #78b9ad
+        }
+
+        main {
+            max-width: 1050px;
+            margin: 22px auto;
+            padding: 0 16px
+        }
+
+        section {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 0 0 8px
+        }
+
+        h2 {
+            font-size: 17px;
+            margin: 22px 0 10px
+        }
+
+        p.hint {
+            color: #666;
+            font-size: 14px
+        }
+
+        form.fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 12px;
+            margin: 16px 0
+        }
+
+        label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 9px;
+            border: 1px solid #c8ddd8;
+            border-radius: 4px;
+            font-size: 14px;
+            background: #f1f8f6;
+            color: #263b37;
+            color-scheme: light;
+            box-shadow: none
+        }
+
+        input::placeholder {
+            color: #849892;
+            opacity: 1
+        }
+
+        input:focus,
+        select:focus {
+            outline: 2px solid #a8d2c8;
+            border-color: #78b9ad
+        }
+
+        button {
+            padding: 9px 13px;
+            border: 1px solid #9bbeb6;
+            border-radius: 4px;
+            background: #e4f1ed;
+            color: #29443e;
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        button:hover {
+            background: #d4e9e3
+        }
+
+        button.primary,
+        nav button.active {
+            background: #78b9ad;
+            color: #173b34;
+            border-color: #78b9ad
+        }
+
+        button:disabled {
+            opacity: 1;
+            color: #29443e;
+            background: #e4f1ed
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+            background: #fff
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 9px;
+            text-align: left;
+            font-size: 13px
+        }
+
+        th {
+            background: #eee
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-top: 10px
+        }
+
+        .hide {
+            display: none
+        }
+
+        .tiles {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 18px
+        }
+
+        .tiles button {
+            background: #fff;
+            color: #222;
+            border: 1px solid #bbb;
+            padding: 18px;
+            min-width: 190px;
+            min-height: 82px;
+            text-align: left;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            white-space: normal
+        }
+
+        .tiles button strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #4d8f84;
+            font-size: 15px
+        }
+
+        .note {
+            font-size: 13px;
+            color: #666;
+            margin-top: 15px
+        }
+
+        .login {
+            max-width: 360px;
+            margin: 25px auto
+        }
+
+        .login input {
+            margin-bottom: 12px
+        }
+    </style>
+</head>
+
+<body>
+    <header>Sistema de Gestão para Consultório Médico</header>
+    <nav>
+        <button data-tab="login" onclick="openTab('login')">Login</button>
+        <button data-tab="inicio" class="active" onclick="openTab('inicio')">Início</button>
+        <button data-tab="acomp" onclick="openTab('acomp')">Acompanhantes</button>
+        <button data-tab="pac" onclick="openTab('pac')">Pacientes</button>
+        <button data-tab="agenda" onclick="openTab('agenda')">Agendamentos</button>
+    </nav>
+    <main>
+        <section id="login" class="hide">
+            <div class="login">
+                <h1>Login</h1>
+                <p class="hint">Digite seu usuário e senha.</p>
+                <label>Usuário</label><input placeholder="Usuário" value="admin"><label>Senha</label><input
+                    type="password" placeholder="Senha" value="admin123">
+                <button class="primary" onclick="openTab('inicio')">Entrar</button>
+            </div>
+        </section>
+        <section id="inicio">
+            <h1>Tela inicial</h1>
+            <p>Bem-vindo(a), Gestor Geral.</p>
+            <div class="tiles">
+                <button onclick="openTab('acomp')"><strong>Gestão de Acompanhantes</strong> Cadastrar e consultar
+                    acompanhantes</button>
+                <button onclick="openTab('pac')"><strong>Gestão de Pacientes</strong> Cadastrar e consultar
+                    pacientes</button>
+                <button onclick="openTab('agenda')"><strong>Gestão de Agendamentos</strong> Marcar e consultar
+                    consultas</button>
+            </div>
+            <p class="note">Use os botões acima para acessar cada parte do sistema.</p>
+        </section>
+        <section id="acomp" class="hide">
+            <h1>Gestão de Acompanhantes</h1>
+            <form class="fields">
+                <div><label>Nome</label><input placeholder="Nome completo"></div>
+                <div><label>CPF</label><input placeholder="CPF"></div>
+                <div><label>Telefone</label><input placeholder="Telefone"></div>
+            </form>
+            <div class="actions"><button class="primary" type="button"
+                    onclick="alert('Prévia: cadastro demonstrativo.')">Cadastrar</button><button
+                    type="reset">Limpar</button></div>
+            <h2>Pesquisar por nome</h2>
+            <form class="fields">
+                <div><input placeholder="Nome do acompanhante"></div>
+                <div class="actions"><button class="primary" type="button">Buscar</button></div>
+            </form>
+            <h2>Acompanhantes cadastrados</h2>
+            <table>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Telefone</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Luciana Ferreira</td>
+                    <td>***.***.***-**</td>
+                    <td>(16) 99123-4401</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>Roberto Vasconcelos</td>
+                    <td>***.***.***-**</td>
+                    <td>(16) 99123-4402</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>Patrícia Nogueira</td>
+                    <td>***.***.***-**</td>
+                    <td>(16) 99123-4403</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </table>
+        </section>
+        <section id="pac" class="hide">
+            <h1>Gestão de Pacientes</h1>
+            <form class="fields">
+                <div><label>Nome</label><input placeholder="Nome completo"></div>
+                <div><label>CPF</label><input placeholder="CPF"></div>
+                <div><label>Data de nascimento</label><input type="date"></div>
+                <div><label>Telefone</label><input placeholder="Telefone"></div>
+                <div><label>Acompanhante</label><select>
+                        <option>Sem acompanhante</option>
+                        <option>Luciana Ferreira</option>
+                        <option>Roberto Vasconcelos</option>
+                        <option>Patrícia Nogueira</option>
+                    </select></div>
+            </form>
+            <div class="actions"><button class="primary"
+                    onclick="alert('Prévia: cadastro demonstrativo.')">Cadastrar</button><button>Limpar</button></div>
+            <h2>Pacientes cadastrados</h2>
+            <table>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Nascimento</th>
+                    <th>Telefone</th>
+                    <th>Acompanhante</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Marcos Vinícius Rocha</td>
+                    <td>***.***.***-**</td>
+                    <td>19/03/1988</td>
+                    <td>(16) 98210-5501</td>
+                    <td>Luciana Ferreira</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>Camila Duarte</td>
+                    <td>***.***.***-**</td>
+                    <td>14/11/1995</td>
+                    <td>(16) 98210-5502</td>
+                    <td>Luciana Ferreira</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>Ricardo Almeida</td>
+                    <td>***.***.***-**</td>
+                    <td>08/07/1974</td>
+                    <td>(16) 98210-5503</td>
+                    <td>Sem acompanhante</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </table>
+        </section>
+        <section id="agenda" class="hide">
+            <h1>Gestão de Agendamentos</h1>
+            <form class="fields">
+                <div><label>Paciente</label><select>
+                        <option>Selecione</option>
+                        <option>Marcos Vinícius Rocha</option>
+                        <option>Camila Duarte</option>
+                        <option>Ricardo Almeida</option>
+                        <option>Juliana Teixeira</option>
+                    </select></div>
+                <div><label>Data</label><input type="date"></div>
+                <div><label>Horário</label><input type="time"></div>
+            </form>
+            <div class="actions"><button class="primary"
+                    onclick="alert('Prévia: agendamento demonstrativo.')">Agendar</button><button>Limpar</button></div>
+            <h2>Consultas cadastradas</h2>
+            <table>
+                <tr>
+                    <th>Data</th>
+                    <th>Horário</th>
+                    <th>Paciente</th>
+                    <th>Acompanhante</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>01/12/2026</td>
+                    <td>09:45</td>
+                    <td>Camila Duarte</td>
+                    <td>Luciana Ferreira</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>01/12/2026</td>
+                    <td>15:00</td>
+                    <td>Ricardo Almeida</td>
+                    <td>Sem acompanhante</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>03/12/2026</td>
+                    <td>08:30</td>
+                    <td>Marcos Vinícius Rocha</td>
+                    <td>Luciana Ferreira</td>
+                    <td><button>Editar</button></td>
+                </tr>
+                <tr>
+                    <td>10/12/2026</td>
+                    <td>11:00</td>
+                    <td>Marcos Vinícius Rocha</td>
+                    <td>Luciana Ferreira</td>
+                    <td><button>Editar</button></td>
+                </tr>
+            </table>
+        </section>
+        <p class="note">Prévia simples para visualizar as telas. Os dados e botões são demonstrativos e não são
+            gravados.</p>
+    </main>
+    <script>
+        function openTab(id) { document.querySelectorAll('main section').forEach(x => x.classList.add('hide')); document.getElementById(id).classList.remove('hide'); document.querySelectorAll('nav button').forEach(x => x.classList.toggle('active', x.dataset.tab === id)); }
+    </script>
+</body>
+
+</html>
